@@ -5,6 +5,10 @@ class Variable:
     def __init__(self,data):
         self.data = data
         self.grad = None
+        self.creator = None
+    def set_creator(self,func):
+        self.creator = func
+
 
 # 2. 实现function类
 class Function:
@@ -12,7 +16,9 @@ class Function:
         x = input.data
         y = self.forward(x) # 具体计算在forward方法中进行
         output = Variable(y)
+        output.set_creator(self)
         self.input = input
+        self.output = output
         return output
         
     def forward(self,x):
